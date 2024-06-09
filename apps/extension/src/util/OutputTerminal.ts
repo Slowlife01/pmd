@@ -1,9 +1,7 @@
 import { EventEmitter, Terminal, window, ThemeIcon, commands } from "vscode"
 
-import { unescape } from "node:querystring";
 import { format } from "node:util";
 import chalk from "chalk";
-import { isBeingModified } from "../actions/modify";
 
 export default class OutputTerminal {
     private terminal: Terminal
@@ -12,16 +10,13 @@ export default class OutputTerminal {
     constructor(name: string, isForCompiler = true) {
         this.emitter = new EventEmitter<string>();
         this.terminal = window.createTerminal({
-            name: isForCompiler ? `${name} - Presence Compiler` : name,
+            name: isForCompiler ? `${name} - pmd` : name,
             iconPath: new ThemeIcon('package'),
             pty: {
                 open: () => null,
                 close: () => {
                     if (!isForCompiler) return;
-                    if (!isBeingModified(name)) return;
-
-                    const instanceId = Buffer.from(unescape(encodeURIComponent(name))).toString("base64");
-                    commands.executeCommand(`stopCompiler-${instanceId}`);
+                    commands.executeCommand(`stopCompiler`);
                 },
                 onDidWrite: this.emitter.event
             }

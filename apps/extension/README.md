@@ -12,3 +12,8 @@ To use the commands, open up the Command Palette using `Ctrl+Shift+P`
 - Press `F5`, this will:
 	- Start a task `npm: debug:extension` to compile the code
 	- Run the extension in a new VS Code window
+
+## Packing the Extension
+
+- Run `vsce package --no-dependencies`
+- Enjoy!

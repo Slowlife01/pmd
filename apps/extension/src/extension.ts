@@ -32,8 +32,9 @@ export function installDependencies() {
   return new Promise<void>((resolve, reject) => {
     exec("npm install", {
       cwd: workspaceFolder
-    }, (err, stdout, stderr) => {
+    }, (err) => {
       if (err) {
+        window.showErrorMessage(err.message)
         window.showErrorMessage("An error occurred while installing the dependencies");
         reject(err);
       } else window.showInformationMessage("Dependencies installed successfully!");

@@ -5,12 +5,11 @@ import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { Validator } from "jsonschema";
-import {
-  getDiscordAppUser,
-  getDiscordUser,
-  getFolderLetter,
-  fetchSchema,
-} from "@pmd/cli";
+
+import fetchSchema from "../functions/fetchSchema.js";
+import getFolderLetter from "../functions/getFolderLetter.js";
+import getDiscordUser from "../functions/getDiscordUser.js";
+import getDiscordAppUser from "../functions/getDiscordAppUser.js";
 
 import { MultiStepInput } from "../util/MultiStepInput";
 
@@ -338,7 +337,7 @@ export default async function createPresence(context: ExtensionContext) {
           "You don't have the dependencies installed, do you want to install them now?",
           "Yes"
         )
-        .then(async (choice: string) => {
+        .then(async (choice: "Yes" | undefined) => {
           if (choice === "Yes") installDependencies();
         });
     }
